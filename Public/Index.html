@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask Blakely — Willow Park Boutique</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Jost', sans-serif; background: #fafaf8; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
+.wp-widget { font-family: 'Jost', sans-serif; max-width: 420px; width: 100%; border: 0.5px solid #c8d0c4; border-radius: 2px; background: #fff; overflow: hidden; display: flex; flex-direction: column; height: 640px; }
+.wp-header { background: #6e7b65; padding: 18px 20px 16px; text-align: center; flex-shrink: 0; }
+.wp-logo-circle { width: 48px; height: 48px; border-radius: 50%; background: #6e7b65; border: 1.5px solid rgba(255,255,255,0.45); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+.wp-logo-text { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 7.5px; letter-spacing: 0.18em; color: #f0ece4; text-align: center; line-height: 1.3; text-transform: uppercase; }
+.wp-header-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 18px; letter-spacing: 0.16em; color: #f0ece4; text-transform: uppercase; margin: 0; }
+.wp-messages { flex: 1; overflow-y: auto; padding: 16px 14px 8px; display: flex; flex-direction: column; gap: 10px; background: #fafaf8; }
+.wp-msg { max-width: 88%; font-size: 13px; line-height: 1.6; padding: 10px 13px; border-radius: 2px; }
+.wp-msg.blakely { background: #fff; border: 0.5px solid #d4dbd0; color: #3a3a38; align-self: flex-start; }
+.wp-msg.user { background: #6e7b65; color: #f0ece4; align-self: flex-end; font-weight: 300; }
+.wp-msg-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #9aaa92; margin-bottom: 5px; font-weight: 400; }
+.wp-outfit-header { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #9aaa92; margin: 4px 0 8px; font-weight: 400; }
+.wp-product-card { background: #fff; border: 0.5px solid #d4dbd0; padding: 12px 13px; margin-top: 7px; border-radius: 2px; }
+.wp-product-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+.wp-product-name { font-size: 12.5px; font-weight: 500; color: #3a3a38; line-height: 1.3; flex: 1; padding-right: 8px; }
+.wp-product-price { font-size: 12px; color: #6e7b65; font-weight: 500; white-space: nowrap; }
+.wp-product-style { font-size: 12px; color: #6b6b69; line-height: 1.5; margin: 5px 0; font-style: italic; }
+.wp-product-pair { font-size: 11px; color: #9aaa92; margin: 6px 0 8px; line-height: 1.4; }
+.wp-product-pair span { color: #6e7b65; font-weight: 500; }
+.wp-product-link { font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase; color: #6e7b65; text-decoration: none; border-bottom: 0.5px solid #6e7b65; padding-bottom: 1px; cursor: pointer; }
+.wp-quick-prompts { padding: 8px 14px 10px; background: #fafaf8; border-top: 0.5px solid #e8ede5; flex-shrink: 0; }
+.wp-quick-label { font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: #b0b8ac; margin-bottom: 7px; }
+.wp-prompts-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+.wp-prompt-chip { background: #fff; border: 0.5px solid #c8d0c4; color: #5a6856; font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 400; padding: 5px 10px; border-radius: 2px; cursor: pointer; letter-spacing: 0.03em; transition: all 0.12s; white-space: nowrap; }
+.wp-prompt-chip:hover { background: #6e7b65; color: #f0ece4; border-color: #6e7b65; }
+.wp-input-area { padding: 10px 14px 13px; border-top: 0.5px solid #d4dbd0; background: #fff; flex-shrink: 0; }
+.wp-input-row { display: flex; gap: 7px; align-items: flex-end; }
+.wp-input { flex: 1; border: 0.5px solid #c8d0c4; border-radius: 2px; padding: 8px 11px; font-family: 'Jost', sans-serif; font-size: 12.5px; font-weight: 300; color: #3a3a38; background: #fafaf8; resize: none; outline: none; line-height: 1.4; }
+.wp-input::placeholder { color: #b0b8ac; }
+.wp-input:focus { border-color: #6e7b65; }
+.wp-send-btn { background: transparent; border: 0.5px solid #6e7b65; color: #6e7b65; padding: 8px 14px; font-family: 'Jost', sans-serif; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; white-space: nowrap; transition: all 0.15s; }
+.wp-send-btn:hover { background: #6e7b65; color: #f0ece4; }
+.wp-email-capture { margin-top: 9px; display: flex; gap: 7px; }
+.wp-email-input { flex: 1; border: 0.5px solid #c8d0c4; border-radius: 2px; padding: 7px 11px; font-family: 'Jost', sans-serif; font-size: 12px; color: #3a3a38; background: #fafaf8; outline: none; }
+.wp-email-input:focus { border-color: #6e7b65; }
+.wp-email-btn { background: #6e7b65; border: none; color: #f0ece4; padding: 7px 13px; font-family: 'Jost', sans-serif; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border-radius: 2px; }
+.wp-typing { display: flex; gap: 4px; align-items: center; padding: 10px 13px; background: #fff; border: 0.5px solid #d4dbd0; border-radius: 2px; width: fit-content; }
+.wp-dot { width: 5px; height: 5px; border-radius: 50%; background: #9aaa92; animation: wpbounce 1.2s infinite; }
+.wp-dot:nth-child(2) { animation-delay: 0.2s; }
+.wp-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes wpbounce { 0%, 60%, 100% { opacity: 0.3; transform: scale(1); } 30% { opacity: 1; transform: scale(1.3); } }
+</style>
+</head>
+<body>
+
+<div class="wp-widget">
+<div class="wp-header">
+<div class="wp-logo-circle">
+<div class="wp-logo-text">WILLOW<br>PARK</div>
+</div>
+<div class="wp-header-title">Ask Blakely</div>
+</div>
+
+<div class="wp-messages" id="wpMessages">
+<div>
+<div class="wp-msg-label">Blakely</div>
+<div class="wp-msg blakely">Hi! I'm Blakely — tell me what you're shopping for and I'll pull together some picks for you.</div>
+</div>
+</div>
+
+<div class="wp-quick-prompts" id="wpQuickPrompts">
+<div class="wp-quick-label">Shop by occasion</div>
+<div class="wp-prompts-grid">
+<button class="wp-prompt-chip" onclick="usePrompt('Beach vacation')">Beach vacation</button>
+<button class="wp-prompt-chip" onclick="usePrompt('Wedding guest')">Wedding guest</button>
+<button class="wp-prompt-chip" onclick="usePrompt('Everyday basics')">Everyday basics</button>
+<button class="wp-prompt-chip" onclick="usePrompt('Summer dinner')">Summer dinner</button>
+<button class="wp-prompt-chip" onclick="usePrompt('Game day')">Game day</button>
+<button class="wp-prompt-chip" onclick="usePrompt('New arrivals')">New arrivals</button>
+<button class="wp-prompt-chip" onclick="usePrompt('Something under $100')">Under $100</button>
+</div>
+</div>
+
+<div class="wp-input-area">
+<div class="wp-input-row">
+<textarea class="wp-input" id="wpInput" rows="1" placeholder="Or type what you're looking for..."></textarea>
+<button class="wp-send-btn" onclick="sendMessage()">Send</button>
+</div>
+</div>
+</div>
+
+<script>
+let conversationHistory = [];
+let emailCaptureShown = false;
+let promptsHidden = false;
+
+function usePrompt(text) {
+hidePrompts();
+submitMessage(text);
+}
+
+function hidePrompts() {
+if (!promptsHidden) {
+document.getElementById('wpQuickPrompts').style.display = 'none';
+promptsHidden = true;
+}
+}
+
+function sendMessage() {
+const input = document.getElementById('wpInput');
+const msg = input.value.trim();
+if (!msg) return;
+input.value = '';
+hidePrompts();
+submitMessage(msg);
+}
+
+async function submitMessage(msg) {
+addMessage('user', msg);
+showTyping();
+
+try {
+const response = await fetch('/api/chat', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+message: msg,
+conversationHistory: conversationHistory
+})
+});
+
+const data = await response.json();
+
+if (!response.ok) {
+removeTyping();
+addMessage('blakely', "Something went wrong. Please try again.");
+console.error('Error:', data);
+return;
+}
+
+  const reply = data.message;
+  conversationHistory.push({ role: 'user', content: msg });
+  conversationHistory.push({ role: 'assistant', content: reply });
+renderResponse(reply);
+
+if (!emailCaptureShown && conversationHistory.length >= 3) {
+showEmailCapture();
+}
+} catch(e) {
+removeTyping();
+addMessage('blakely', "I'm so sorry — something went wrong. Try again in a moment!");
+console.error('Error:', e);
+}
+}
+
+function renderResponse(text) {
+const msgs = document.getElementById('wpMessages');
+const wrapper = document.createElement('div');
+const label = document.createElement('div');
+label.className = 'wp-msg-label';
+label.textContent = 'Blakely';
+wrapper.appendChild(label);
+
+const lines = text.split('\n');
+let introLines = [];
+let products = [];
+let outroLines = [];
+let inProducts = false;
+
+lines.forEach(line => {
+if (line.trim().startsWith('PRODUCT:')) {
+inProducts = true;
+const content = line.replace('PRODUCT:', '').trim();
+const parts = content.split('|').map(p => p.trim());
+if (parts.length >= 2) {
+products.push({
+name: parts[0],
+price: parts[1],
+style: parts[2] || '',
+pair: (parts[3] || '').replace('PAIR:', '').trim()
+});
+}
+} else if (line.trim()) {
+if (!inProducts) introLines.push(line.trim());
+else outroLines.push(line.trim());
+}
+});
+
+if (introLines.length) {
+const bubble = document.createElement('div');
+bubble.className = 'wp-msg blakely';
+bubble.textContent = introLines.join(' ');
+wrapper.appendChild(bubble);
+}
+
+if (products.length) {
+const outfitLabel = document.createElement('div');
+outfitLabel.className = 'wp-outfit-header';
+outfitLabel.textContent = "Blakely's picks for you";
+wrapper.appendChild(outfitLabel);
+
+products.forEach(p => {
+const card = document.createElement('div');
+card.className = 'wp-product-card';
+
+const top = document.createElement('div');
+top.className = 'wp-product-top';
+top.innerHTML = `<div class="wp-product-name">${p.name}</div><div class="wp-product-price">${p.price}</div>`;
+card.appendChild(top);
+
+if (p.style) {
+const s = document.createElement('div');
+s.className = 'wp-product-style';
+s.textContent = p.style;
+card.appendChild(s);
+}
+
+if (p.pair) {
+const pr = document.createElement('div');
+pr.className = 'wp-product-pair';
+pr.innerHTML = `Pair with <span>${p.pair}</span>`;
+card.appendChild(pr);
+}
+
+const link = document.createElement('span');
+link.className = 'wp-product-link';
+link.textContent = 'Shop this →';
+link.style.cursor = 'pointer';
+card.appendChild(link);
+
+wrapper.appendChild(card);
+});
+}
+
+if (outroLines.length) {
+const outro = document.createElement('div');
+outro.className = 'wp-msg blakely';
+outro.style.marginTop = '8px';
+outro.textContent = outroLines.join(' ');
+wrapper.appendChild(outro);
+}
+
+msgs.appendChild(wrapper);
+msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addMessage(role, text) {
+const msgs = document.getElementById('wpMessages');
+const wrapper = document.createElement('div');
+if (role === 'blakely') {
+const l = document.createElement('div');
+l.className = 'wp-msg-label';
+l.textContent = 'Blakely';
+wrapper.appendChild(l);
+}
+const bubble = document.createElement('div');
+bubble.className = `wp-msg ${role === 'user' ? 'user' : 'blakely'}`;
+bubble.textContent = text;
+wrapper.appendChild(bubble);
+msgs.appendChild(wrapper);
+msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+const msgs = document.getElementById('wpMessages');
+const t = document.createElement('div');
+t.id = 'wpTyping';
+t.innerHTML = '<div class="wp-msg-label">Blakely</div><div class="wp-typing"><div class="wp-dot"></div><div class="wp-dot"></div><div class="wp-dot"></div></div>';
+msgs.appendChild(t);
+msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+const t = document.getElementById('wpTyping');
+if (t) t.remove();
+}
+
+function showEmailCapture() {
+emailCaptureShown = true;
+const msgs = document.getElementById('wpMessages');
+const wrapper = document.createElement('div');
+const label = document.createElement('div');
+label.className = 'wp-msg-label';
+label.textContent = 'Blakely';
+wrapper.appendChild(label);
+const bubble = document.createElement('div');
+bubble.className = 'wp-msg blakely';
+bubble.textContent = "Want me to send your picks straight to your inbox? I'll keep you posted on new arrivals you'd love too.";
+wrapper.appendChild(bubble);
+const capture = document.createElement('div');
+capture.className = 'wp-email-capture';
+capture.innerHTML = '<input class="wp-email-input" placeholder="Your email address" id="wpEmail" /><button class="wp-email-btn" onclick="captureEmail()">Send picks</button>';
+wrapper.appendChild(capture);
+msgs.appendChild(wrapper);
+msgs.scrollTop = msgs.scrollHeight;
+}
+
+function captureEmail() {
+const email = document.getElementById('wpEmail');
+if (!email || !email.value.trim()) return;
+email.parentElement.innerHTML = '<div style="font-size:12px;color:#6e7b65;letter-spacing:0.06em;">✓ Picks sent! Check your inbox.</div>';
+addMessage('blakely', "Perfect — your picks are on their way! Anything else I can help you find?");
+}
+
+document.getElementById('wpInput').addEventListener('keydown', function(e) {
+if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+</script>
+
+</body>
+</html>
